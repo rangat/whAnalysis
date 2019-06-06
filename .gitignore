@@ -6,3 +6,8 @@ test*.py
 *.zip
 .DS_Store
 corpora/
+corpora_expanded/
+edited/
+unread/
+unread_split/
+analysis/
