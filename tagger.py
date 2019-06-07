@@ -42,7 +42,7 @@ def tagObj(obj):
     
     # Strict Embeded Heuristic
     elif h.emb_seq(start_wh, rel_clause_heur):
-        obj['quetType'] = "Embeded Question"
+        obj['questType'] = "Embeded Question"
         obj['heuristic'] = 'strict_emb'
     
     # Strict Relative Clause Heuristic

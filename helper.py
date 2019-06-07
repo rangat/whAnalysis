@@ -76,16 +76,19 @@ def rel_clause_seq(start_wh:list, rel_clause) -> bool:
     return False
 
 def emb_seq(start_wh:list, rel_clause) -> bool:
-    hit_v = False
     hit_rel = False
+    hit_v = False
+    hit_rel_after_v = False
 
     for word, pos in start_wh:
-        if hit_rel and 'V' in pos:
-            hit_v = True
-        elif pos in rel_clause:
+        if pos in rel_clause: # Has hit the relative clause
             hit_rel = True
+        elif hit_rel and 'V' in pos:
+            hit_v = True
+        if hit_rel and hit_v and pos in rel_clause:
+            hit_rel_after_v = True
         
-    if hit_v and hit_rel:
+    if hit_v and hit_rel and not hit_rel_after_v:
         return True
 
     return False
