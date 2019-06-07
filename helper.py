@@ -51,6 +51,8 @@ def is_sub_aux_inv(tagged:list, wh:str, aux:list, y:list) -> bool:
             return False
         elif hit_wh and word in aux:
             hit_aux = True
+        elif hit_wh and hit_aux and 'V' in pos:
+            return False
         elif hit_wh and hit_aux and pos in y:
             hit_y = True
     
@@ -68,6 +70,21 @@ def rel_clause_seq(start_wh:list, rel_clause) -> bool:
         elif hit_v and pos in rel_clause:
             hit_rel = True
     
+    if hit_v and hit_rel:
+        return True
+
+    return False
+
+def emb_seq(start_wh:list, rel_clause) -> bool:
+    hit_v = False
+    hit_rel = False
+
+    for word, pos in start_wh:
+        if hit_rel and 'V' in pos:
+            hit_v = True
+        elif pos in rel_clause:
+            hit_rel = True
+        
     if hit_v and hit_rel:
         return True
 
@@ -92,6 +109,10 @@ def collect_json(directory:str, endfname:str):
         json.dump(collected, outfile, indent=4)
         print("successfully made complete json")
     return True
+
+def get_v_before_wh(tagged:list, wh:str) -> str:
+    pass
+
 
 if __name__ == '__main__':
     # import nltk
