@@ -111,7 +111,14 @@ def collect_json(directory:str, endfname:str):
     return True
 
 def get_v_before_wh(tagged:list, wh:str) -> str:
-    pass
+    found_wh = False
+    tagged.reverse()
+    for word,pos in tagged:
+        if word.lower() == wh.lower():
+            found_wh = True
+        elif found_wh and 'V' in pos:
+            return word
+        
 
 
 if __name__ == '__main__':
