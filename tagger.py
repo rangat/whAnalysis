@@ -86,14 +86,22 @@ def tagObj(obj):
     v_2_after = ""
     v_3_after = ""
 
+    modals = ['can', 'could', 'may', 'might', 'shall', 'should', 'will', 'would', 'must']
+    obj['clauseType'] = "Ambiguous"
+    
     # Tag Clause Type:
-    if obj['questType'] == "Relative Clause":
-        obj['clauseType'] = "Ambiguous"
+    if obj['questType'] == "Root Question":
+        if v_1_after in modals:
+            obj['clauseType'] = "Modal"
+        else:
+            obj['clauseType'] = "Finite"
+    
     elif obj['questType'] == "Embeded Question":
-        obj['clauseType'] = "Ambiguous"
-    else:
-        obj['clauseType'] = "Ambiguous"
-
+        if v_1_after in modals:
+            obj['clauseType'] = "Modal"
+        else:
+            obj['clauseType'] = "Finite"
+        
     return obj
 
 def tagList(json:list):
