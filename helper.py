@@ -89,6 +89,7 @@ def emb_seq(start_wh:list, rel_clause) -> bool:
             hit_rel_after_v = True
         
     if hit_v and hit_rel and not hit_rel_after_v:
+        
         return True
 
     return False
@@ -114,15 +115,50 @@ def collect_json(directory:str, endfname:str):
     return True
 
 def get_v_before_wh(tagged:list, wh:str) -> str:
-    found_wh = False
+    hit_wh = False
     tagged.reverse()
     for word,pos in tagged:
         if word.lower() == wh.lower():
-            found_wh = True
-        elif found_wh and 'V' in pos:
+            hit_wh = True
+        elif hit_wh and 'V' in pos:
             return word
         
+def get_three_v_after_wh(tagged:list, wh:str) -> str:
+    hit_wh = False
+    hit_v1 = False
+    hit_v2 = False
+    verb1 = ""
+    verb2 = ""
+    verb3 = ""
+    for word, pos in tagged:
+        if word.lower() == wh.lower():
+            hit_wh = True
+            continue
+        elif hit_wh and 'V' in pos:
+            hit_wh = False
+            hit_v1 = True
+            verb1 = word
+            continue
+        elif hit_v1 and 'V' in pos:
+            hit_v1 = False
+            hit_v2 = True
+            verb2 = word
+            continue
+        elif hit_v2 and 'v' in pos: 
+            hit_v2 = False
+            verb3 = word
+    
+    return verb1, verb2, verb3
 
+
+
+
+    
+
+
+            
+        
+        
 
 if __name__ == '__main__':
     # import nltk
