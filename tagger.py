@@ -20,9 +20,6 @@ def tagObj(obj):
     obj['phrase'] = ''
     obj['wh'] = None
 
-    if obj['corpus'] == 'brown':
-        pass
-
     tagged = pos_tag(word_tokenize(sent))
     lowered_pos = [(x[0].lower(), x[1]) for x in tagged]
     obj['wh'] = h.getWh(tagged)
