@@ -3,11 +3,6 @@
 whAnalysis is a project for analyzing sentences to tag for clauseType and questType
 Works with data of any type in our perscribed json dataformat
 
-## Built With
-
-This project is designed and developed entirely in python with the use of
-* [NLTK](https://www.nltk.org/) - The Natural Language Toolkit
-
 ## Usage
 
 To use our tagger we recomend you install simply using git clone
@@ -36,6 +31,16 @@ Our JSON data format includes a new object for each sentence and a key ```"sente
     }
 ]
 ```
+
+### Dependencies
+
+This project is designed and developed entirely in python with the use of
+
+* [Python](https://www.python.org/) - Python Version **3.5** or greater
+* [NLTK](https://www.nltk.org/) - The Natural Language Toolkit
+* [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - Python scraping and parse tree processing library
+* [JSON](https://docs.python.org/3/library/json.html) - Python json library
+* [Multiprocessing](https://docs.python.org/3.7/library/multiprocessing.html) - Python multiprocessing library
 
 ## Authors and acknowledgment
 
