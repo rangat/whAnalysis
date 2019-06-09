@@ -80,28 +80,29 @@ def tagObj(obj):
         if h.x_in_set("V", start_wh, is_pos=True) and not h.is_sub_aux_inv(lowered_pos, obj['wh'], aux, rel_clause_heur):
             obj['questType'] = "Embeded Question"
             obj['heuristic'] = 'second_pass'
-    
-    v_before_wh = ""
-    v_1_after = ""
-    v_2_after = ""
-    v_3_after = ""
 
+    v_before_wh = h.get_v_before_wh(tagged, obj['wh'])
+    v_1_after, v_2_after, v_3_after = h.get_three_v_after_wh(tagged, obj['wh'])
+    wh_v1 = h.get_set_wh_v1(tagged, obj['wh'])
+
+    obj['v_before'] = v_before_wh
+    obj['v1_after'] = v_1_after
+    obj['v2_after'] = v_2_after
+    obj['v3_after'] = v_3_after
+    obj['wh_v1'] = wh_v1
+
+    obj['mat_verb'] = h.modded_lemma(v_before_wh)
+    obj['emb_verb'] = h.modded_lemma(v_1_after)
     modals = ['can', 'could', 'may', 'might', 'shall', 'should', 'will', 'would', 'must']
-    obj['clauseType'] = "Ambiguous"
     
     # Tag Clause Type:
-    if obj['questType'] == "Root Question":
-        if v_1_after in modals:
+    if v_1_after.lower() in modals:
             obj['clauseType'] = "Modal"
-        else:
-            obj['clauseType'] = "Finite"
-    
-    elif obj['questType'] == "Embeded Question":
-        if v_1_after in modals:
-            obj['clauseType'] = "Modal"
-        else:
-            obj['clauseType'] = "Finite"
-        
+    elif h.x_in_set('to', wh_v1, is_pos=False) and obj['questType'] != "Root Question":
+        obj['clauseType'] = "Non-Finite"
+    else:
+        obj['clauseType'] = "Finite"
+
     return obj
 
 def tagList(json:list):
@@ -122,5 +123,5 @@ if __name__ == '__main__':
     tagged = pool_tag(jList)
     # Remove None objects in list
     tagged = [x for x in tagged if x is not None]
-    with open('edited/edited_corpus_2.json', 'w') as j:
+    with open('edited/edited_corpus.json', 'w') as j:
         json.dump(tagged, j, indent=4)
