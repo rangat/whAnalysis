@@ -8,7 +8,7 @@ The linguistic work which brought this project to life was presented at [XPRAG](
 
 ### Installation
 
-To use our tagger we recommend you install simply using git clone
+To use our tagger, we recommend you install simply using git clone
 
 ```bash
 git clone https://github.com/rangat/whAnalysis.git
@@ -16,7 +16,7 @@ git clone https://github.com/rangat/whAnalysis.git
 
 ### Run
 
-To run our tagger run the command below. It will create a new file in your current directory with the tagged json.
+To run our tagger, run the command below. It will create a new file in your current directory with the tagged json.
 
 ```bash
 python tagger.py relative/dir/to/data.json
