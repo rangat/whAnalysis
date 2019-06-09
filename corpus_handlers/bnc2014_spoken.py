@@ -11,7 +11,7 @@ from nltk import pos_tag
 
 import handler_helpers as hh
 
-bnc_spoken_dir = '/Users/rangat/Documents/lingResearch/whAnalysis/corpora/bnc2014spoken-xml/spoken/untagged'
+bnc_spoken_dir = 'corpora/bnc2014spoken-xml/spoken/untagged'
 bnc_extension = ".xml"
 
 def extract_wh_sentences_from_file(file:str)->list:
