@@ -45,7 +45,7 @@ This project is designed and developed entirely in python with the use of
 ## Authors and acknowledgment
 
 * [**Rangaraj Tirumala**](http://www.rangarajt.com/) - *Current Work*
-* **Morgan Moyer** - *Linguistic Guidence*
+* [**Morgan Moyer**](http://www.rci.rutgers.edu/~mcm315/) - *Linguistic Guidence*
 * **Divya Appasamy** - *Current Work*
 * **Knyckolas Sutherland** - *Initial work*
 
