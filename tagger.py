@@ -4,7 +4,8 @@ from nltk import sent_tokenize
 from nltk import pos_tag
 
 import json
-
+import sys
+import os
 import helper as h
 
 from multiprocessing import Pool
@@ -37,9 +38,9 @@ def tagObj(obj):
         obj['questType'] = "Fragment"
         obj['heuristic'] = 'frag'
     
-    # Strict Embeded Heuristic
+    # Strict Embedded Heuristic
     elif h.emb_seq(start_wh, rel_clause_heur):
-        obj['questType'] = "Embeded Question"
+        obj['questType'] = "Embedded Question"
         obj['heuristic'] = 'strict_emb'
     
     # Strict Relative Clause Heuristic
@@ -62,9 +63,9 @@ def tagObj(obj):
         obj['questType'] = "Root Question"
         obj['heuristic'] = '?'
     
-    # Loose Embeded Question Heuristic
+    # Loose Embedded Question Heuristic
     elif h.x_in_set("V", start_wh, is_pos=True):
-        obj['questType'] = "Embeded Question"
+        obj['questType'] = "Embedded Question"
         obj['heuristic'] = 'v_before_wh'
     
     else:
@@ -75,7 +76,7 @@ def tagObj(obj):
     # Second pass:
     if obj['heuristic'] == 'rel_clause':
         if h.x_in_set("V", start_wh, is_pos=True) and not h.is_sub_aux_inv(lowered_pos, obj['wh'], aux, rel_clause_heur):
-            obj['questType'] = "Embeded Question"
+            obj['questType'] = "Embedded Question"
             obj['heuristic'] = 'second_pass'
 
     v_before_wh = h.get_v_before_wh(tagged, obj['wh'])
@@ -112,7 +113,7 @@ def pool_tag(jlist):
     p = Pool()
     return p.map(tagObj, jlist)
 
-if __name__ == '__main__':
+def multi_run():
     jList = []
     with open('unread/corpus.json', 'r') as j:
         jList = json.load(j)
@@ -121,4 +122,17 @@ if __name__ == '__main__':
     # Remove None objects in list
     tagged = [x for x in tagged if x is not None]
     with open('edited/edited_corpus.json', 'w') as j:
+        json.dump(tagged, j, indent=4)
+
+if __name__ == '__main__':
+    filepath = sys.argv[1]
+    filename = os.path.basename(filepath)
+    jList = []
+    with open(filepath, 'r') as j:
+        jList = json.load(j)
+    
+    tagged = pool_tag(jList)
+    # Remove None objects in list
+    tagged = [x for x in tagged if x is not None]
+    with open(f'tagged_{filename}', 'w') as j:
         json.dump(tagged, j, indent=4)
