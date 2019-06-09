@@ -116,12 +116,13 @@ def collect_json(directory:str, endfname:str):
 
 def get_v_before_wh(tagged:list, wh:str) -> str:
     hit_wh = False
-    tagged.reverse()
-    for word,pos in tagged:
+    t = tagged[::-1]
+    for word,pos in t:
         if word.lower() == wh.lower():
             hit_wh = True
-        elif hit_wh and 'V' in pos:
+        elif ('V' in pos[0] or "MD" in pos) and hit_wh:
             return word
+    return ""
         
 def get_three_v_after_wh(tagged:list, wh:str) -> str:
     hit_wh = False
@@ -133,32 +134,50 @@ def get_three_v_after_wh(tagged:list, wh:str) -> str:
     for word, pos in tagged:
         if word.lower() == wh.lower():
             hit_wh = True
-            continue
-        elif hit_wh and 'V' in pos:
+        elif ('V' in pos[0] or "MD" in pos) and hit_wh:
             hit_wh = False
             hit_v1 = True
             verb1 = word
-            continue
-        elif hit_v1 and 'V' in pos:
+        elif ('V' in pos[0] or "MD" in pos) and hit_v1:
             hit_v1 = False
             hit_v2 = True
             verb2 = word
-            continue
-        elif hit_v2 and 'v' in pos: 
+        elif ('V' in pos[0] or "MD" in pos) and hit_v2: 
             hit_v2 = False
             verb3 = word
     
     return verb1, verb2, verb3
 
+def get_set_wh_v1(tagged_sent:list, wh:str):
+    get = False
+    ret_list = []
 
-
-
-    
-
-
-            
+    for word, pos in tagged_sent:
+        if wh.lower() == word.lower():
+            get = True
         
+        if get:
+            tup = (word, pos)
+            ret_list.append(tup)
         
+        if ("V" in pos[0] or "MD" in pos) and get:
+            break
+
+    return ret_list
+
+def modded_lemma(verb:str):
+    from nltk.stem import WordNetLemmatizer
+    lemmatizer = WordNetLemmatizer() 
+
+    if not verb:
+        return None
+    if verb.endswith((".", "?", "-", "!")):
+        verb = verb[:-1]
+        
+    if verb in ["'re", "'m"]:
+        return "be"
+    else:
+        return lemmatizer.lemmatize(verb, "v")
 
 if __name__ == '__main__':
     # import nltk
