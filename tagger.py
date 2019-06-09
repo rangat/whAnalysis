@@ -134,5 +134,9 @@ if __name__ == '__main__':
     tagged = pool_tag(jList)
     # Remove None objects in list
     tagged = [x for x in tagged if x is not None]
-    with open(f'tagged_{filename}', 'w') as j:
+
+    end_filename = f'tagged_{filename}'
+    with open(end_filename, 'w') as j:
         json.dump(tagged, j, indent=4)
+    
+    print(f"Successfully tagged {filename} and created {end_filename}")
