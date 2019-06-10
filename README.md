@@ -4,6 +4,8 @@ whAnalysis is a project for tagging clauseType and questType to analyze for freq
 
 The linguistic work which brought this project to life was presented at [XPRAG](https://www.xprag.de/?page_id=6207) on June 13th, 2019.
 
+See more about our motivations behind this project [here](INTRO.md)
+
 ## Usage
 
 ### Installation
